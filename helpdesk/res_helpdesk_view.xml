@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>	
+		<!--tree view-->
+        <record id="res_helpdesk_tree" model="ir.ui.view">
+            <field name="name">res.helpdesk.tree</field>
+            <field name="model">res.helpdesk</field>
+            <field name="arch" type="xml">
+                <tree create="false" string="incidencias">                 	
+                	<field name="name"/>
+					<field name="departamento" />
+					<field name="puesto"/>
+					<field name="usuario"/>
+					<field name="usuario_sol"/>
+					<field name="fecha"/>
+					<field name="fecha_resol"/>
+					<field name="estado"/>										
+                </tree>
+            </field>
+        </record>  
+		<!--form view Ver-->
+		<record model="ir.ui.view" id="res_helpdesk_form_view">
+            <field name="name">res.helpdesk.form_view</field>
+            <field name="model">res.helpdesk</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form create="false" string="helpdesk">
+                    <field name="name"/>
+					<field name="estado" on_change="onchange_estado()"/>
+					<field name="departamento" />
+					<field name="puesto"/>					
+					<field name="usuario"/>
+					<field name="usuario_sol" />
+					<field name="fecha"/>
+					<field name="fecha_resol" />					
+					<field name="descripcion" />
+					<field name="descripcion_resol" />
+                </form>
+            </field>
+        </record>
+		<!--form view Añadir-->
+		<record model="ir.ui.view" id="res_helpdesk_form_add">
+            <field name="name">res.helpdesk.form_add</field>
+            <field name="model">res.helpdesk</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="helpdesk">
+                    <field name="name"/>
+					<field name="estado" readonly='True'/>
+					<field name="departamento" />
+					<field name="puesto"/>					
+					<field name="usuario"/>
+					<field name="fecha"/>					
+					<field name="descripcion" />
+                </form>
+            </field>
+        </record>
+		<!-- Search view-->
+		<record id="res_helpdesk_search" model="ir.ui.view">
+			<field name="name">res.helpdesk.search</field>
+			<field name="model">res.helpdesk</field>
+			<field name="arch" type="xml">
+				<search string="Tickets">
+					<field name="fecha" />
+					<field name="fecha_resol"/>
+					<field name="name" />
+					<field name="puesto" />
+					<field name="estado" />				
+					<field name="usuario" />
+					<field name="usuario_sol"/>
+					<field name="departamento" />										
+					<filter name="filter_abiertos" string="Tickets Abiertos" domain="[('estado', '=','a')]" />
+					<filter name="filter_cerrados" string="Tickets Cerrados" domain="[('estado', '=','c')]" />
+				</search>
+			</field>
+		</record>			
+		<!-- Menu Action ver-->
+		<record model="ir.actions.act_window" id="action_form_helpdesk">
+            <field name="name">Helpdesk</field>
+            <field name="res_model">res.helpdesk</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>		
+		<!-- Menu Action Add-->
+		<record model="ir.actions.act_window" id="action_form_add_helpdesk">
+			<field name="name">Helpdesk</field>
+			<field name="res_model">res.helpdesk</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="res_helpdesk_form_add"/>
+		</record>
+		<!-- Menu-->
+		<menuitem name="Helpdesk" id="menu_helpdesk" />       
+		<menuitem name="Incidencias" id="menu_Incidencias" parent="menu_helpdesk" />
+		<menuitem name="Ver Incidencias" id="menu_ver" parent="menu_Incidencias" action="action_form_helpdesk"/>
+		<menuitem name="Añadir Incidencias" id="menu_ver2" parent="menu_Incidencias" action="action_form_add_helpdesk"/>
+		<!--Sequence for ticket-->
+		<record id="seq_type_res_helpdesk_ticket" model="ir.sequence.type">
+			<field name="name">Helpdesk Ticket</field>
+			<field name="code">res.helpdesk.ticket</field>
+		</record>
+		<record id="seq_res_helpdesk_ticket" model="ir.sequence">
+			<field name="name">Helpdesk Ticket</field>
+			<field name="code">res.helpdesk.ticket</field>  
+			<field name="prefix">TK-</field>
+			<field name="padding">6</field>
+			<field name="number_increment">1</field>
+		</record>  
+	</data>
+</openerp>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="all_users" model="res.groups">
+            <field name="name">Usuarios</field>
+        </record>
+		
+		<record id="helpdesk" model="res.groups">
+            <field name="name">HelpDesk</field>
+        </record>
+		
+		 <record id="rule_own" model="ir.rule">
+            <field name="name">only_own_tickets</field>
+            <field name="model_id" ref="model_res_helpdesk" />
+            <field name="groups" eval="[(4, ref('all_users'))]"/>
+            <field name="domain_force">[('usuario.id','=',user.id)]</field>
+			<field name="perm_create" eval="True"/>
+			<field name="perm_unlink" eval="False"/>
+			<field name="perm_write" eval="False"/>
+			<field name="perm_read" eval="True"/>
+        </record>
+
+    </data>
+</openerp>
+
